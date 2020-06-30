@@ -2,6 +2,7 @@ package com.example.rest.webservices.restfulwebservice.user;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -24,7 +25,10 @@ public class UserDaoService {
 	}
 	
 	public User save(User user) {
-		user.setId(++usersCount);
+//		System.out.println(user.getId());
+		if(user.getId() == 0) {
+			user.setId(++usersCount);
+		}
 		users.add(user);
 		return user;
 	}
@@ -37,4 +41,17 @@ public class UserDaoService {
 		}
 		return null;
 	}
+	
+	public User deleteById(int id) {
+		Iterator<User> iterator = users.iterator();
+		while(iterator.hasNext()) {
+			User user = iterator.next();
+			if(user.getId() == id) {
+				iterator.remove();
+				return user;
+			}
+		}
+		return null;
+	}
+	
 }
